@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Raise Issue</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<form action="/reporting/submitComplain" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <h1 class="display-1">
+                Raise a Complaint
+            </h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <label for="authority_id">Select an authority *</label>
+                <select class="form-control" name="authority_id" id="authority_id" required="true">
+                    {% for authority in authorities %}
+                    <option value="{{authority.id}}">{{authority.authority_name}}</option>
+                    {% endfor %}
+                </select>
+                <hr>
+            </div>
+
+            <div class="col-md-6">
+                <label for="user_name">Name</label>
+                <input type="text" class="form-control" name="user_name" id="user_name" placeholder="Optional">
+            </div>
+
+            <div class="col-md-6">
+                <label for="location">City *</label>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Only for analysis purposes">
+            </div>
+
+
+            {% for question in questions %}
+
+            {% if question.question_type == "INPUT" %}
+            <div class="col-md-6">
+                <label for="question_{{question.id}}">{{question.question}}{% if question.isRequired == "True" %}*{% endif %}</label>
+                <input class="form-control" type="text" name="question_{{question.id}}" id="question_{{question.id}}">
+            </div>
+            {% else %}
+            <div class="col-md-12">
+                <label for="question_{{question.id}}">{{question.question}}{% if question.isRequired == "True" %}*{% endif %}</label>
+                <textarea class="form-control" name="question_{{question.id}}" id="question_{{question.id}}" cols="30" rows="3"></textarea>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto" style="margin-top: 10px">
+                <button class="btn btn-outline-success" type="submit" name="raiseIssue">Raise Anonymous Complain</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</html>

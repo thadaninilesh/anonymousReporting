@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    {% if all_authorities %}
+    <ul>
+        {% for authority in all_authorities %}
+             <li><a href="/reporting/{{ authority.id }}/">{{ authority.authority_name }}</a></li>
+         {% endfor %}
+    </ul>
+    {% else %}
+        <p>No authorities available</p>
+    {% endif %}
+</body>
+</html>
