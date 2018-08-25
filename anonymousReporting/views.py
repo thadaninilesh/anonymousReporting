@@ -32,11 +32,10 @@ def authority_detail(request, authority_id):
 
 
 def raise_issue(request):
-    authorities = Authority.objects.order_by('authority_name')
-    questions = OtherQuestions.objects.order_by('added_on')
     context = {
-        'authorities': authorities,
-        'questions': questions
+        'authorities': Authority.objects.order_by('authority_name'),
+        'questions': OtherQuestions.objects.order_by('added_on'),
+        'count': Answers.objects.count()
     }
     return render(request, 'anonymousReporting/raise_issue.html', context)
 
